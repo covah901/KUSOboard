@@ -67,7 +67,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
   if (index == 0) { /* First encoder */
     switch(get_highest_layer(layer_state)){
       case 0: //Layer 0
@@ -77,14 +77,14 @@ void encoder_update_user(uint8_t index, bool clockwise) {
           tap_code_delay(KC_AUDIO_VOL_DOWN, 10);
         }
         break;
-      case 1: //Layer 4
+      case 1: //Lower
         if (!clockwise) {
           tap_code(KC_WH_L);
         } else {
           tap_code(KC_WH_R);
         }
         break;
-      case 4: //Layer 2
+      case 4: //FN Layer
         if (!clockwise) {
           tap_code(KC_PGUP);
         } else {
@@ -99,7 +99,8 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         }
         break;
     }
-  }
+  
+  return true;}
 }
 
 // clang-format on
